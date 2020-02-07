@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <button class="btn btn-primary pull-right">ADD</button>
+      <button class="btn btn-primary pull-right" (click)="openModalAdd(add)">ADD</button>
       <table class="table table-houver">
         <thead>
           <tr>
@@ -23,5 +23,27 @@
       </table>
     </div>
   </div>
-
 </div>
+
+
+<ng-template #add>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form >
+      <label for="name">Nome</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="user.name">
+      <p></p>
+
+      <label for="address">Endereço</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="user.address">
+      <p></p>
+
+      <button class="btn btn-primary" (click)="onSave()">Salvar</button>
+    </form>
+  </div>
+</ng-template>
