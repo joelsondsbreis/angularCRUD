@@ -37,11 +37,11 @@
     <form >
       <label for="name">Nome</label>
       <input type="text" class="form-control" name="name" [(ngModel)]="user.name">
-      <p></p>
+      <p class="text-danger">{{errorMsg.name}}</p>
 
       <label for="address">Endereço</label>
       <input type="text" class="form-control" name="name" [(ngModel)]="user.address">
-      <p></p>
+      <p class="text-danger">{{errorMsg.address}}</p>
 
       <button class="btn btn-primary" (click)="onSave()">Salvar</button>
     </form>
