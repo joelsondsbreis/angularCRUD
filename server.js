@@ -1,4 +1,5 @@
 var express = require('express');
+var cors = require('cors');
 var path = require("path");
 var bodyParser = require('body-parser');
 var mongo = require("mongoose");
@@ -9,9 +10,11 @@ var db = mongo.connect("mongodb://localhost:27017/AngularCRUD", function (err, r
 });
 
 var app = express();
+app.use(cors());
 app.use(bodyParser());
 app.use(bodyParser.json({ limit: '5mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use(function (req, res, next) {
   res.setHeader('Acess-Control-Allow-Origin', 'http://localhost:4200');
@@ -32,7 +35,7 @@ var UsersSchema = new Schema({
 var model = mongo.model('users', UsersSchema, 'users');
 
 app.post("/api/SaveUser", function (req, res) {
-  var mod = new model(req.body);
+  var mode = new model(req.body);
   if (req.body.mode == "Save") {
     mode.save(function (err, data) {
       if (err) {

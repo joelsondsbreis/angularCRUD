@@ -11,9 +11,9 @@
           </tr>
           </thead>
           <tbody>
-            <tr>
-          <td>sopeap</td>
-          <td>Endereço</td>
+            <tr *ngFor="let user of users">
+          <td>{{user.name}}</td>
+          <td>{{user.address}}</td>
           <td>
             <button class="btn btn-warning">Editar</button> |
             <button class="btn btn-danger">Deletar</button>

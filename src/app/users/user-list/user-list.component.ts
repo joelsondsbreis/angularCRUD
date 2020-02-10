@@ -12,10 +12,21 @@ import { UserService } from '../../user.service';
 export class UserListComponent implements OnInit {
   modalRef: BsModalRef;
   user: User = new User();
+  users: any;
   errorMsg: ErrorMsg = new ErrorMsg;
   constructor(private modalService: BsModalService, private userService: UserService ) { }
 
   ngOnInit() {
+    this.getUser();
+  }
+
+  getUser() {
+    this.userService.get().subscribe(res => {
+      this.users = res;
+      console.log(this.users);
+    }, error => {
+      console.log(error);
+    });
   }
 
   onSave() {
@@ -26,6 +37,7 @@ export class UserListComponent implements OnInit {
       return;
     }
     this.userService.post(this.user).subscribe(res => {
+      this.getUser();
       this.modalRef.hide();
       console.log(res);
     }, error => {
