@@ -1,26 +1,27 @@
 var express = require('express');
-var cors = require('cors');
 var path = require("path");
 var bodyParser = require('body-parser');
 var mongo = require("mongoose");
 
-var db = mongo.connect("mongodb://localhost:27017/AngularCRUD", function (err, response) {
+var db = mongo.connect("mongodb://localhost:27017/AngularCRUD",/* function (err, response) */ {
+  useNewUrlParser:true, useUnifiedTopology:true,
+/*
   if (err) { console.log(err); }
-  else { console.log('Conectado ao ' + db, ' + ', response); }
+  else { console.log('Conectado ao ' + db, ' + ', response); },
+  */
 });
 
 var app = express();
-app.use(cors());
 app.use(bodyParser());
 app.use(bodyParser.json({ limit: '5mb' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use(function (req, res, next) {
-  res.setHeader('Acess-Control-Allow-Origin', 'http://localhost:4200');
-  res.setHeader('Acess-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Acess-Control-Allow-Headers', 'X-Requested-With, content-type');
-  res.setHeader('Acess-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
   next();
 });
 
@@ -31,20 +32,22 @@ var UsersSchema = new Schema({
   address: { type: String },
 }, { versionKey: false });
 
+mongo.set('useFindAndModify', false);
+
 
 var model = mongo.model('users', UsersSchema, 'users');
 
 app.post("/api/SaveUser", function (req, res) {
-  var mode = new model(req.body);
+  var mod = new model(req.body);
+  console.log(mod);
   if (req.body.mode == "Save") {
-    mode.save(function (err, data) {
+    mod.save(function (err, data) {
       if (err) {
         res.send(err);
       }
       else {
-        res.send({ data: "A Gravação foi inserida..!!" });
+        res.send({data: "A informação foi inserida..!!" });
       }
-
     });
   }
   else {
@@ -54,10 +57,10 @@ app.post("/api/SaveUser", function (req, res) {
           res.send(err);
         }
         else {
-          res.send({ data: "A gravação foi atualizada..!!" });
+          res.send({data: "A informação foi atualizada..!!"});
         }
-      });
-
+      }
+    );
   }
 })
 
@@ -67,10 +70,12 @@ app.post("/api/deleteUser", function (req, res) {
       res.send(err);
     }
     else {
-      res.send({ data: "A gravação foi deletada..!!" });
+      res.send({ data: "A informação deletada..!!" });
     }
   });
-});
+})
+
+
 
 app.get("/api/getUser", function (req, res) {
   model.find({}, function (err, data) {
@@ -80,10 +85,20 @@ app.get("/api/getUser", function (req, res) {
     else {
       res.send(data);
     }
-
   });
 })
 
+
 app.listen(8080, function () {
-  console.log('Exemplo de aplicação que ouve a porta 8080')
+
+  console.log('ouvindo a porta 8080!')
 })
+
+
+
+
+
+
+
+
+
