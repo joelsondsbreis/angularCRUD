@@ -15,8 +15,8 @@
           <td>{{user.name}}</td>
           <td>{{user.address}}</td>
           <td>
-            <button class="btn btn-warning">Editar</button> |
-            <button class="btn btn-danger">Deletar</button>
+            <button class="btn btn-warning" (click)="openModalEdit(edit, user)">Editar</button> |
+            <button class="btn btn-warning" (click)="openModalDelete(delete, user._id)">Deletar</button>
           </td>
             </tr>
           </tbody>
@@ -38,12 +38,46 @@
       <label for="name">Nome</label>
       <input type="text" class="form-control" name="name" [(ngModel)]="user.name">
       <p class="text-danger">{{errorMsg.name}}</p>
-
       <label for="address">Endereço</label>
       <input type="text" class="form-control" name="name" [(ngModel)]="user.address">
       <p class="text-danger">{{errorMsg.address}}</p>
 
       <button class="btn btn-primary" (click)="onSave()">Salvar</button>
     </form>
+  </div>
+</ng-template>
+
+<ng-template #edit>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Editar</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form >
+      <label for="name">Nome</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="edit.name">
+      <p class="text-danger">{{errorMsg.name}}</p>
+      <label for="address">Endereço</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="editUser.address">
+      <p class="text-danger">{{errorMsg.address}}</p>
+
+      <button class="btn btn-primary" (click)="onUpdate()">Editar</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #delete>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Confirma?</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Voce tem certeza que quer deletar o usuário?</p>
+    <button (click)="modalRef.hide()" class="btn primary">NÃO</button> |
+    <button class="btn btn-danger" (click)="deleteUser()">SIM</button>
   </div>
 </ng-template>

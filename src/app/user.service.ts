@@ -15,4 +15,10 @@ export class UserService {
   post(data) {
     return this.http.post(this.baseUrl + '/api/saveUser', data);
   }
-}
+  update(data) {
+    return this.http.post(this.baseUrl + '/api/updateUser', data);
+  }
+  delete(id) {
+    return this.http.post(this.baseUrl + '/api/deleteUser', id);
+  }
+};
