@@ -41,6 +41,7 @@ var model = mongo.model('users', UsersSchema, 'users');
 
 app.post("/api/SaveUser",function(req,res){
  var mod = new model(req.body);
+ console.log(mod);
  if(req.body.mode =="Salvar")
  {
     mod.save(function(err, data){
